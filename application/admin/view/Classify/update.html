@@ -1,0 +1,72 @@
+{include file="app/admin/view/common/head.html" /}
+<body>
+<div class="am-g">
+	<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">										
+	</div>
+	<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4" style="padding-top: 30px;">
+		<form class="am-form am-form-horizontal" action="" method="post">
+			<input type="hidden" class="id" disabled="disabled" placeholder="分类名称" name="id" value="{$data.id}">							
+			<div class="am-form-group">
+				<label for="user-name" class="am-u-sm-3 am-form-label">分类名称</label>
+				<div class="am-u-sm-9">
+					<input type="text" class="type_name" disabled="disabled" placeholder="分类名称" name="type_name" value="{$data.type_name}">
+					<small>10字以内...</small>
+				</div>
+			</div>		
+			<div class="am-form-group">
+				<label for="user-intro" class="am-u-sm-3 am-form-label">分类描述</label>
+				<div class="am-u-sm-9">
+					<textarea rows="5" class="dosc" name="dosc" placeholder="输入描述">{$data.dosc}</textarea>
+					<small>250字以内...</small>
+				</div>
+			</div>
+			<div class="am-form-group">
+				<div class="am-u-sm-9 am-u-sm-push-3">
+					<input type="submit" class="am-btn am-btn-success" value="修改" id="button" />
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	//更新
+	$("#button").on("click",function(){
+		event.preventDefault(); 
+		var id = $(".id").val();
+		var type_name = $(".type_name").val();
+		var dosc = $(".dosc").val();
+		var data = {
+			'id':id,
+			'type_name':type_name,
+			'dosc':dosc
+		}		
+		var url = "{:url('Classify/update_data')}";
+	    $.ajax({
+	        url: url,
+	        type: "post",
+	        data: data,
+	        dataType:"json",
+	        success: function (data) {
+	        	if(data.code == 0){
+	        		$.jq_Alert({
+						message: data.msg,
+						btnOkClick: function() {
+							window.location.href="{:url('Classify/index')}";
+						}
+					});
+	        	}else{
+	        		$.jq_Alert({
+						message: data.msg
+					});
+	        	}
+	        },
+	        error: function (data) {
+	            console.log('请求失败');
+	        }
+	    });
+	})
+})
+</script>
+</body>
+</html>

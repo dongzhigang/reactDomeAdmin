@@ -1,0 +1,290 @@
+{include file="app/admin/view/common/head.html" /}
+<body>
+<div class="dvcontent">
+	<!-- 修改商品 start-->
+	<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8"></div>
+	<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
+		<form  class="am-form am-form-horizontal" method="post" id="formadd" enctype="multipart/form-data" >
+			<input type="hidden" name="id" class="form_id" value="{$res.product_id}">						
+			<div class="am-form-group">
+				<label for="name" class="am-u-sm-3 am-form-label">商品名称</label>
+				<div class="am-u-sm-9">
+					<input type="text" id="name" class="from_title" placeholder="商品名称" name="title" value="{$res.title}">
+					<small>10字以内...</small>
+				</div>
+			</div>
+			<div class="am-form-group">
+				<label for="name" class="am-u-sm-3 am-form-label">关键词</label>
+				<div class="am-u-sm-9">
+					<input type="text" class="from_keywords" placeholder="关键词" name="keywords" value="{$res.keywords}">
+				</div>
+			</div>
+			<div class="am-form-group">
+				<label for="name" class="am-u-sm-3 am-form-label">商品价格</label>
+				<div class="am-u-sm-9">
+					<input type="number" id="name" min="0" class="from_price" placeholder="商品价格" name="price" value="{$res.price}">
+				</div>
+			</div>
+			<div class="am-form-group">
+				<label for="name" class="am-u-sm-3 am-form-label">最低价格</label>
+				<div class="am-u-sm-9">
+					<input type="number" min="0" class="from_min_price" placeholder="最低价格" name="min_price" value="{$res.min_price}">
+				</div>
+			</div>
+			<div class="am-form-group">
+				<label for="name" class="am-u-sm-3 am-form-label">商品库存</label>
+				<div class="am-u-sm-9">
+					<input type="number" id="name" min="0" class="from_stock" placeholder="商品库存" name="stock" value="{$res.stock}">
+				</div>
+			</div>											
+			<div class="am-form-group">
+				<label for="user-email" class="am-u-sm-3 am-form-label">商品分类</label>
+				<div class="am-u-sm-9">
+					<select  name="cid" class="cid" id="from_type">
+						{volist name='type' id='user'}
+							{if condition="$res.cid eq $user.cid" }
+								<option value="{$user.cid}" selected="">{$user.type_name}</option>
+							{else /}
+								<option value="{$user.cid}">{$user.type_name}</option>
+							{/if}
+						{/volist}											
+					</select>
+				</div>
+			</div>
+			<div class="am-form-group">
+				<label for="user-email" class="am-u-sm-3 am-form-label">商品属性</label>
+				<div class="am-u-sm-9">
+					<select  name="name_id" class="name_id"  id="from_propety">
+						<option selected value="{$res.name_id}">{$title}</option>														
+					</select>
+				</div>
+			</div>
+			<div class="am-form-group">
+				<label for="user-email" class="am-u-sm-3 am-form-label">属性值</label>
+				<div class="am-u-sm-9" style=" padding-top: .6em;" id="proValue" >
+					{volist name='value' id='user'}
+						<div style="display: inline-block;margin-right: 10px;">
+					 	 	<label style="font-size: 14px; vertical-align: middle;margin-right:5px;">{$user.value}</label>
+					  		<input type="checkbox" checked="checked" name="attributeValue" class="value_id" value="{$user.value_id}">
+					  	</div>
+					{/volist}
+				</div>
+			</div>
+			<div class="am-form-group">
+				<label for="user-email" class="am-u-sm-3 am-form-label">商品状态</label>
+				<div class="am-u-sm-9">
+					<select  name="status" class="from_status" >
+						{if condition="$res.status eq 0"}
+							<option selected="" value="{$res.status}">下架</option>	
+							<option value="1">上架</option>	
+						{else /}
+							<option selected="" value="{$res.status}">上架</option>	
+							<option value="0">下架</option>	
+						{/if}														
+					</select>
+				</div>
+			</div>
+			<div class="am-form-group">
+				<label for="name" class="am-u-sm-3 am-form-label">
+					商品主图</label>
+				<div class="am-u-sm-9">
+					<input type="file" name="imgUrls" data-img="{$res.img}" class="from_file" id="file" value="111">
+					<span class="am_form_span">选择文件</span>
+				</div>
+			</div>
+			<div class="am-form-group">
+				<label for="name" class="am-u-sm-3 am-form-label"></label>
+				<div class="am-u-sm-9" id="addImg">
+					<img src="__ROOT__{$res.img}" class="am_form_img">
+				</div>
+			</div>
+			<div class="am-form-group">
+				<label for="name" class="am-u-sm-3 am-form-label">商品描述</label>
+				<div class="am-u-sm-9">
+					<textarea class="form_docs" rows="5" name="docs" placeholder="输入描述">{$res.docs}</textarea>
+					<small>250字以内...</small>
+				</div>
+			</div>	
+			<div class="am-form-group">
+				<label for="user-intro" class="am-u-sm-3 am-form-label">商品详情</label>
+				<div class="am-u-sm-9">
+					<!-- 富文本编辑 -->
+					<div id="editor">{$res.content}</div>
+					<input type="hidden" name="" class="content" value='{$res.content}'>										   
+				    <script type="text/javascript">
+				        var E = window.wangEditor
+				        var editor = new E('#editor');
+				        //上传图片到服务器
+				        editor.customConfig.uploadImgServer = "{:url('Common/fileUploads')}";
+				        //服务器返回数据
+				        editor.customConfig.uploadImgHooks = {
+						    customInsert: function (insertImg, result, editor) {
+				                // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+				                // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果	         
+				                // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+				                var url =result.data;
+				                url.map(function(v,i){
+				                	insertImg("/thinkPHP/"+v);
+				                })
+				                // result 必须是一个 JSON 格式字符串！！！否则报错
+				            }
+				        };
+				        // 失去焦点
+				        editor.customConfig.onchange = function (html) {
+				        	$('.content').val(html)						   										    
+					    }
+		       			editor.create();
+				    </script>
+				</div>
+			</div>
+			<div class="am-form-group">
+				<div class="am-u-sm-9 am-u-sm-push-3">
+					<input type="submit" class="am-btn am-btn-success" value="保存" id="button" />
+				</div>
+			</div>
+		</form >
+	</div>
+	<!-- 修改商品 end-->
+</div>
+<script type="text/javascript">
+$(function(){
+	//图片预览
+	$(".from_file").on("change",function(){
+		if(this.files && this.files[0]){
+			var files = this.files[0];
+			var formData = new FormData();
+				formData.append('file',files);
+			// 上传图片
+			$.ajax({
+	            url: "{:url('Common/fileUploads')}",
+	            type: "post",
+	            data: formData,
+	            contentType: false,
+		        processData: false,
+		        dataType:"json",
+		        mimeType: "multipart/form-data",
+	            success: function (data) {
+	            	if(data.code == 0){
+	            		$(".from_file").data('img',data.data[0]);
+	            	}else{
+	            		$.jq_Alert({
+							message: data.msg
+						});
+	            	}
+	            },
+	            error: function (data) {
+	                console.log('请求失败');
+	            }
+	        });
+			img=new Image();
+	        url=window.URL.createObjectURL(files)  // 得到bolb对象路径，可当成普通的文件路径一样使用，赋值给src;
+	        img.src=url;
+	        $("#addImg").empty();
+	        $("#addImg").append(img).children().addClass("am_form_img");
+		}
+	})
+	//数据更新
+	$("#button").on("click",function(){
+		event.preventDefault();
+		var arrID =[]; 
+		$("input:checkbox[name='attributeValue']:checked").each(function(i, n){ 
+		    arrID.push($(this).val())
+		});
+		var imgArray = new Array();	//详情图数组
+    	var img = $("#editor img");	
+    	//imgArray初始化
+    	if(img.length){
+    		img.each(function(i){
+        		imgArray.push(this.src)
+        	})
+		}
+		var id     	  = $(".form_id").val();						//商品id
+		var title     = $(".from_title").val();						//商品名称
+		var keywords  = $(".from_keywords").val();					//商品关键词
+		var price     = $(".from_price").val();						//商品价格	
+		var min_price = $(".from_min_price").val();					//商品最低价	
+		var stock     = $(".from_stock").val();						//商品库存
+		var status    = $(".from_status").val();					//商品状态
+		var file      = $(".from_file").data('img');				//商品主图
+		var cid       = $(".cid").val();					        //商品分类	
+		var name_id   = $(".name_id").val();					    //商品属性
+		var value_id  = arrID;										//商品属性值id	
+		var docs      = $(".form_docs").val();						//商品描述	
+		var content   = $(".content").val();						//商品详情
+		var cont_img  = imgArray;									//详情图片路径	
+		var formData = new FormData();
+			formData.append('id',id);
+			formData.append('title',title);
+			formData.append('keywords',keywords);
+			formData.append('price',price);
+			formData.append('min_price',min_price);
+			formData.append('stock',stock);
+			formData.append('status',status);
+			formData.append('cid',cid);
+			formData.append('name_id',name_id);
+			formData.append('value_id',value_id);
+			formData.append('imgUrls',file);
+			formData.append('docs',docs);
+			formData.append('content',content);
+			formData.append('cont_img',cont_img);
+		var url = "{:url('Merchandise/update_data')}"; 					//请求接口
+        $.ajax({
+            url: url,
+            type: "post",
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType:"json",
+            mimeType: "multipart/form-data",
+            success: function (data) {
+            	if(data.code == 0){
+            		$.jq_Alert({
+						message: data.msg,
+						btnOkClick: function() {
+							window.location.href="{:url('Merchandise/list_data')}";
+						}
+					});
+            	}else{
+        			$.jq_Alert({
+						message: data.msg
+					});
+            	}
+            },
+            error: function (data) {
+                console.log('请求失败');
+            }
+        });
+	})
+
+	//获取商品属性
+	$("#from_type").on("change",function(){
+		$.get("{:url('Classify/set_property')}?id="+this.value,function(res){
+			if(res.code == 0){
+				var html = '<option value="">请选择属性</option>';
+				for(var i=0; i<res.data.length;i++ ){
+					html += '<option value="'+res.data[i].name_id+'">'+res.data[i].title+'</option>';
+				}
+				$("#from_propety").html(html);
+				$("#proValue").html('');
+			}
+		})
+	})
+	//获取商品属性值
+	$("#from_propety").on('change',function(){
+		$.get("{:url('Classify/set_propertyValue')}?id="+this.value,function(res){
+			if(res.code == 0){
+				var html = '';
+				for(var i=0; i<res.data.length;i++ ){
+					html +='<div style="display: inline-block;margin-right: 10px;">'
+						  +'<label style="font-size: 14px; vertical-align: middle;margin-right:5px;">'+res.data[i].value+'</label>'
+						  +'<input type="checkbox" name="attributeValue" class="value_id" value="'+res.data[i].value_id+'">'
+						  +'</div>';
+				}
+				$("#proValue").html(html)
+			}
+		})
+	})
+})
+</script>
+</body>
+</html>

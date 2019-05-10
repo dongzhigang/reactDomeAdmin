@@ -1,0 +1,90 @@
+{include file="app/admin/view/common/head.html" /}
+<body>
+<div class="am-g">
+	<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
+		
+	</div>
+	<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4"
+		style="padding-top: 30px;">
+		<form class="am-form am-form-horizontal" action="user/addUser1Submit.action" method="post">
+			<input type="hidden" name="id" value="{$data.id}" class="id">							
+			<div class="am-form-group">
+				<label for="user-name" class="am-u-sm-3 am-form-label">用户名</label>
+				<div class="am-u-sm-9">
+					<input type="text" id="user-name" required placeholder="用户名" name="userName" class="userName" value="{$data.userName}">
+				</div>
+			</div>
+			<div class="am-form-group">
+				<label for="user-email" class="am-u-sm-3 am-form-label">密码</label>
+				<div class="am-u-sm-9">
+					<input type="tel" id="user-phone" required placeholder="请输入密码" name="password" class="password" value="{$data.password}" />
+				</div>
+			</div>
+			<div class="am-form-group">
+				<label for="user-email" class="am-u-sm-3 am-form-label">权限</label>
+				<div class="am-u-sm-9">
+					<select  name="limits" class="limits">
+						{if condition="$data.limits > 0"} 
+							<option value="0">0</option>
+							<option value="{$data.limits}"  selected>{$data.limits}</option>
+						{else /}
+							<option value="{$data.limits}"  selected>{$data.limits}</option>
+							<option value="1">1</option>
+						{/if}
+					</select>
+				</div>
+			</div>
+			<div class="am-form-group">
+				<div class="am-u-sm-9 am-u-sm-push-3">
+					<input type="submit" class="am-btn am-btn-success" value="添加用户" id="button" />
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	//更新用户
+	$("#button").on("click",function(){
+		event.preventDefault();
+		var id = $(".id").val();
+		var userName = $(".userName").val();
+		var password = $(".password").val();
+		var limits = $(".limits").val();		
+		var formData = new FormData();
+	        formData.append('userName',userName);
+	        formData.append('password',password);
+	        formData.append('limits',limits);
+	        formData.append('id',id);
+		var url = "__MODULE__/User/update_data"
+	    $.ajax({
+	        url: url,
+	        type: "post",
+	        data: formData,
+	        contentType: false,
+	        processData: false,
+	        dataType:"json",
+	        mimeType: "multipart/form-data",
+	        success: function (data) {
+	        	if(data.code == 0){
+	        		$.jq_Alert({
+						message: data.msg,
+						btnOkClick: function() {
+							window.location.href="__MODULE__/User/user.html";
+						}
+					});
+	        	}else{
+	        		$.jq_Alert({
+						message: data.msg
+					});
+	        	}
+	        },
+	        error: function (data) {
+	            console.log('请求失败');
+	        }
+	    });
+	})
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+{include file="app/admin/view/common/head.html" /}
+<body>
+<div class="dvcontent">
+	<div>
+		<!--tab start-->
+		<div class="tabs" style="margin: 30px;">
+			<div class="hd">
+				<ul>
+					<li class="on" style="box-sizing: initial;-webkit-box-sizing: initial;">订单列表</li>
+					 <!-- <li class="" style="box-sizing: initial;-webkit-box-sizing: initial;">商品入库</li> -->
+				</ul>
+			</div>
+			<div class="bd">
+				<ul style="display: block;padding: 20px;">
+					<li>
+						<!--分页显示角色信息 start-->
+						<div id="dv1">
+							<table class="table" id="tbRecord">
+								<thead>
+									<tr>
+										<th>编号</th>
+										<th>订单编号</th>
+										<th>商品名称</th>
+										<th>商品图片</th>
+										<th>商品价格</th>
+										<th>商品数量</th>
+										<th>订单日期</th>
+										<th>编辑</th>
+										<th>删除</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td>商品1</td>
+										<td>肉类</td>
+										<td>1000</td>
+										<td>2012-12-10</td>
+										<td class="edit"><button onclick="btn_edit(1)"><i class="icon-edit bigger-120"></i>编辑</button></td>
+										<td class="delete"><button onclick="btn_delete(1)"><i class="icon-trash bigger-120"></i>删除</button></td>
+									</tr>
+							<tr>
+										<td>1</td>
+										<td>商品1</td>
+										<td>肉类</td>
+										<td>1000</td>
+										<td>2012-12-10</td>
+										<td class="edit"><button onclick="btn_edit(1)"><i class="icon-edit bigger-120"></i>编辑</button></td>
+										<td class="delete"><button onclick="btn_delete(1)"><i class="icon-trash bigger-120"></i>删除</button></td>
+									</tr>
+										<tr>
+										<td>1</td>
+										<td>商品1</td>
+										<td>肉类</td>
+										<td>1000</td>
+										<td>2012-12-10</td>
+										<td class="edit"><button onclick="btn_edit(1)"><i class="icon-edit bigger-120"></i>编辑</button></td>
+										<td class="delete"><button onclick="btn_delete(1)"><i class="icon-trash bigger-120"></i>删除</button></td>
+									</tr>
+										<tr>
+										<td>1</td>
+										<td>商品1</td>
+										<td>肉类</td>
+										<td>1000</td>
+										<td>2012-12-10</td>
+										<td class="edit"><button onclick="btn_edit(1)"><i class="icon-edit bigger-120"></i>编辑</button></td>
+										<td class="delete"><button onclick="btn_delete(1)"><i class="icon-trash bigger-120"></i>删除</button></td>
+									</tr>
+									
+										<tr>
+										<td>1</td>
+										<td>商品1</td>
+										<td>肉类</td>
+										<td>1000</td>
+										<td>2012-12-10</td>
+										<td class="edit"><button onclick="btn_edit(1)"><i class="icon-edit bigger-120"></i>编辑</button></td>
+										<td class="delete"><button onclick="btn_delete(1)"><i class="icon-trash bigger-120"></i>删除</button></td>
+									</tr>
+									
+										<tr>
+										<td>1</td>
+										<td>商品1</td>
+										<td>肉类</td>
+										<td>1000</td>
+										<td>2012-12-10</td>
+										<td class="edit"><button onclick="btn_edit(1)"><i class="icon-edit bigger-120"></i>编辑</button></td>
+										<td class="delete"><button onclick="btn_delete(1)"><i class="icon-trash bigger-120"></i>删除</button></td>
+									</tr>
+									
+									
+										<tr>
+										<td>1</td>
+										<td>商品1</td>
+										<td>肉类</td>
+										<td>1000</td>
+										<td>2012-12-10</td>
+										<td class="edit"><button onclick="btn_edit(1)"><i class="icon-edit bigger-120"></i>编辑</button></td>
+										<td class="delete"><button onclick="btn_delete(1)"><i class="icon-trash bigger-120"></i>删除</button></td>
+									</tr>
+									
+										<tr>
+										<td>1</td>
+										<td>商品1</td>
+										<td>肉类</td>
+										<td>1000</td>
+										<td>2012-12-10</td>
+										<td class="edit"><button onclick="btn_edit(1)"><i class="icon-edit bigger-120"></i>编辑</button></td>
+										<td class="delete"><button onclick="btn_delete(1)"><i class="icon-trash bigger-120"></i>删除</button></td>
+									</tr>
+									
+								</tbody>
+							
+							</table>
+						</div>
+						<!--分页显示角色信息 end-->
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--tab end-->
+	</div>
+</div>
+<script>
+	$(function() {
+	});
+	//删除
+	var btn_delete = function(id) {
+		$.jq_Confirm({
+			message: "您确定要删除吗?",
+			btnOkClick: function() {
+				
+			}
+		});
+	}
+</script>
+</body>
+</html>

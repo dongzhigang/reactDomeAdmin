@@ -1,0 +1,180 @@
+{include file="app/admin/view/common/head.html" /}
+<body>
+<div class="dvcontent">
+	<div>
+		<!--tab start-->
+		<div class="tabs">
+			<div class="hd">
+				<ul style="">
+					<li style="box-sizing: initial;-webkit-box-sizing: initial;" class="on">查看分类</li>
+					<li class="" style="box-sizing: initial;-webkit-box-sizing: initial;">添加分类</li>
+				</ul>
+			</div>
+			<div class="bd">
+				<ul style="display: block;padding: 20px;">
+					<li>
+						<!--分页显示角色信息 start-->
+						<div id="dv1">
+							<table class="table" id="tbRecord">
+								<thead>
+									<tr>
+										<th>分类编号</th>
+										<th>分类名称</th>
+										<th>分类描述</th>
+										<th>分类属性</th>
+										<th>编辑</th>
+										<th>删除</th>
+									</tr>
+								</thead>
+								<tbody>
+									{volist name='lists' id='user'}
+									    <tr>
+											<td>{$key+1}</td>
+											<td>{$user.type_name}</td>
+											<td>{$user.dosc}</td>
+											<td class="edit">
+												<a href="{:url('Property/property')}?id={$user.cid}" style="background: #2468a9;color: #fff; padding:5px 10px;">查看</a>
+											</td>
+											<td class="edit"><button onclick="btn_edit({$user.id})"><i class="icon-edit bigger-120"></i>编辑</button></td>
+											<td class="delete"><button onclick="btn_delete('{$user.cid}')"><i class="icon-trash bigger-120"></i>删除</button></td>
+										</tr>											
+									{/volist}
+									{if condition="$lists eq null"}	
+										<tr>
+											<td colspan="8" style="text-align: center;">没有数据</td>
+										</tr>
+									{/if}
+								</tbody>
+							
+							</table>
+						</div>
+						<!--分页显示角色信息 end-->
+					</li>
+				</ul>
+				<ul class="theme-popbod dform" style="display: none;">
+					<div class="am-cf admin-main" style="padding-top: 0px;">
+					<!-- content start -->			
+					<div class="am-cf admin-main" style="padding-top: 0px;">
+						<!-- content start -->
+						<div class="admin-content">
+							<div class="admin-content-body">								
+								<div class="am-g">
+									<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">										
+									</div>
+									<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4" style="padding-top: 30px;">
+										<form class="am-form am-form-horizontal" action="" method="post">								
+											<div class="am-form-group">
+												<label for="user-name" class="am-u-sm-3 am-form-label">分类名称</label>
+												<div class="am-u-sm-9">
+													<input type="text" class="type_name" required placeholder="分类名称" name="type_name">
+													<small>10字以内...</small>
+												</div>
+											</div>		
+											<div class="am-form-group">
+												<label for="user-intro" class="am-u-sm-3 am-form-label">分类描述</label>
+												<div class="am-u-sm-9">
+													<textarea rows="5" class="dosc" name="dosc" placeholder="输入描述"></textarea>
+													<small>250字以内...</small>
+												</div>
+											</div>
+											<div class="am-form-group">
+												<div class="am-u-sm-9 am-u-sm-push-3">
+													<input type="submit" class="am-btn am-btn-success" value="添加分类" id="button" />
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						
+						</div>
+						<!-- content end -->
+					</div>
+					<!-- end-->
+				</ul>
+			</div>
+		</div>
+		<!--tab end-->
+	</div>			
+</div>
+<script>
+	$(function() {
+		$(".tabs").slide({ trigger: "click" });
+		//添加分类
+		$("#button").on("click",function(){
+			event.preventDefault(); 
+			var type_name = $(".type_name").val();
+			var dosc = $(".dosc").val();
+			var data = {
+				'type_name':type_name,
+				'dosc':dosc
+			}
+			console.log(data)
+			var url = "{:url('Classify/add_data')}"
+		    $.ajax({
+		        url: url,
+		        type: "post",
+		        data: data,
+		        dataType:"json",
+		        success: function (data) {
+		        	if(data.code == 0){
+		        		$.jq_Alert({
+							message: data.msg,
+							btnOkClick: function() {
+								window.location.reload();
+							}
+						});
+		        	}else{
+		        		$.jq_Alert({
+							message: data.msg,
+							btnOkClick: function() {
+								window.location.reload();
+							}
+						});
+		        	}
+		        },
+		        error: function (data) {
+		            console.log('请求失败');
+		        }
+		    });
+		})
+	});
+	//分类删除
+	var btn_delete = function(id) {
+		$.jq_Confirm({
+			message: "您确定要删除吗?",
+			btnOkClick: function() {
+				$.ajax({
+					type: "post",
+					url: "{:url('Classify/del_data')}",
+					data: { 'cid': id},
+					dataType:"json",
+					success: function(data) {
+						if(data.code == 0){
+							$.jq_Alert({
+								message: data.msg,
+								btnOkClick: function() {
+									window.location.reload();
+								}
+							});
+		            	}else{
+	            			$.jq_Alert({
+								message: data.msg,
+								btnOkClick: function() {
+									window.location.reload();
+								}
+							});
+		            	}
+					}
+				});
+			}
+		});
+	}
+	//编辑分类
+	var btn_edit = function(id){
+		window.location.href = "{:url('Classify/update')}?id="+id;
+	}
+</script>
+</body>
+
+</html>

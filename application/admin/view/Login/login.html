@@ -1,0 +1,66 @@
+{include file="app/admin/view/common/head.html" /}
+<body>
+	<div class="container">
+		<div class="login_box">
+			<div class="login_title">后台管理系统</div>
+			<div class="login_form">
+				<form method="post" action="">
+					<ul>
+						<li>
+							<label>账号：</label>
+							<input type="text" name="userName" class="userName">
+						</li>
+						<li>
+							<label>密码：</label>
+							<input type="password" name="password" class="password">
+						</li>
+					</ul>
+					<div class="button">
+						登录
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script >
+	$(function(){
+		$(".button").on("click",function(){
+			event.preventDefault(); 
+			var userName = $(".userName").val();
+			var password = $(".password").val();		
+			var formData = new FormData();
+		        formData.append('userName',userName);
+		        formData.append('password',password);
+			var url = "{:url('Login/loginButton')}"
+		    $.ajax({
+		        url: url,
+		        type: "post",
+		        data: formData,
+		        contentType: false,
+		        processData: false,
+		        dataType:"json",
+		        mimeType: "multipart/form-data",
+		        success: function (data) {
+		        	console.log(data)
+		        	if(data.code == 0){
+		        		$.jq_Alert({
+							message: data.msg,
+							btnOkClick: function() {
+								window.location.href = "{:url('Index/index')}"
+							}
+						});
+		        	}else{
+		        		$.jq_Alert({
+							message: data.msg,
+						});
+		        	}
+		        },
+		        error: function (data) {
+		            console.log('请求失败');
+		        }
+		    });
+		})
+	})
+</script>
+</body>
+</html>

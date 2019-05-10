@@ -1,0 +1,37 @@
+{include file="app/admin/view/common/head.html" /}
+<body>
+<div class="am-g">
+	<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">										
+	</div>
+	<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4" style="padding-top: 30px;">
+		<div class="am-form am-form-horizontal" action="" method="post">
+			{volist name='data' id='user'}					
+			<div class="am-form-group">
+				<label for="user-name" class="am-u-sm-3 am-form-label">属性值</label>
+				<div class="am-u-sm-9">
+					<input type="text" class="title" disabled="disabled" placeholder="属性值" value="{$user.value}">
+					<div class="delete" style="cursor: pointer;"  onclick="del_data('{$user.id}')"><i class="icon-trash bigger-120"></i>删除</div>
+				</div>
+			</div>
+			{/volist}
+			<div class="am-form-group">
+				<div class="am-u-sm-9 am-u-sm-push-3">
+					<input type="submit" class="am-btn am-btn-success" value="返回" id="button" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	//返回
+	$("#button").on("click",function(){
+		window.history.go(-1);
+	})
+})
+var del_data = function(id){
+	window.location.href = "{:url('Property/del_data')}?id=" + id;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{include file="app/admin/view/Common/head.html" /}
+<body>
+	<div class="dvheader">
+		<div class="dvheadertools">
+			<span class="headerspantitle">后台管理系统</span>
+			<ul class="headerultools">
+				<li class="headerlitools_info headerlitools" style="background-color: #075597">
+					<div class="headeruserface" style="text-align: center;"><i class="icon-user" style="color: black;font-size: 19px;"></i></div>
+					{$userName?$userName:"管理员"}
+				</li>
+				<li class="headerlitools_info headerlitools" style="background-color: #075597" id="exit">退出</li>
+			</ul>
+		</div>
+	</div>
+	<div class="dvcontent">
+		<ul class="ulleftmenu" style="border-right: 1px solid #ddd;">
+			<li class="limenuitem">
+				<i class="icon-cog menuicon"></i>系统菜单<b class="arrow icon-angle-down arrow-down"></b>
+				<ul class="ulleftsubitems">
+					<a href="{:url('Merchandise/list_data')}" target="right">
+						<li>商品管理</li>
+					</a>
+					<a href="{:url('Indent/index')}" target="right">
+						<li>订单管理</li>
+					</a>
+					<a href="{:url('Classify/index')}" target="right">
+						<li>商品分类</li>
+					</a>
+					{switch name="limits"}
+					    {case value="0"}<a href="{:url('Login/updatePwd')}" target="right"><li >修改密码</li></a>{/case}
+					    {case value="1"}<a href="{:url('User/user')}" target="right"><li>用户管理</li></a>{/case}
+					{/switch}
+				</ul>
+			</li>
+		</ul>
+		<div style="position: absolute; left: 191px; right: 20px; ">
+			<iframe src="{:url('Merchandise/list_data')}"  width="100%" height="1200" name="right" border="none"></iframe>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(function(){
+		$("#exit").on("click",function(){
+			window.location.href = "{:url('Login/login')}"
+		})
+	})
+</script>
+</html>

@@ -1,0 +1,70 @@
+{include file="app/admin/view/common/head.html" /}
+<body>
+<div class="am-g">
+	<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">										
+	</div>
+	<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4" style="padding-top: 30px;">
+		<form class="am-form am-form-horizontal" action="" method="post">
+			<input type="hidden" class="name_id" disabled="disabled" placeholder="属性名称" name="name_id" value="{$name_id}">							
+			<div class="am-form-group">
+				<label for="user-name" class="am-u-sm-3 am-form-label">属性名称</label>
+				<div class="am-u-sm-9">
+					<input type="text" class="title" disabled="disabled" placeholder="属性名称" name="title" value="{$title}">
+					<small>10字以内...</small>
+				</div>
+			</div>
+			<div class="am-form-group">
+				<label for="user-name" class="am-u-sm-3 am-form-label">属性值</label>
+				<div class="am-u-sm-9">
+					<input type="text" class="value" placeholder="属性值" name="value" value="">
+					<small>10字以内...</small>
+				</div>
+			</div>	
+			<div class="am-form-group">
+				<div class="am-u-sm-9 am-u-sm-push-3">
+					<input type="submit" class="am-btn am-btn-success" value="添加" id="button" />
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	//添加
+	$("#button").on("click",function(){
+		event.preventDefault(); 
+		var name_id = $(".name_id").val();
+		var value = $(".value").val();
+		var data = {
+			'name_id':name_id,
+			'value':value
+		}		
+		var url = "{:url('Property/newproperty')}";
+	    $.ajax({
+	        url: url,
+	        type: "post",
+	        data: data,
+	        dataType:"json",
+	        success: function (data) {
+	        	if(data.code == 0){
+	        		$.jq_Alert({
+						message: data.msg,
+						btnOkClick: function() {
+							window.history.go(-1);
+						}
+					});
+	        	}else{
+	        		$.jq_Alert({
+						message: data.msg
+					});
+	        	}
+	        },
+	        error: function (data) {
+	            console.log('请求失败');
+	        }
+	    });
+	})
+})
+</script>
+</body>
+</html>
